@@ -71,7 +71,7 @@ function reduce(array, callback, initialValue) {
 function intersection(arrays) {
   let arr = arrays[0];
 
-  const checker = (accum, curr) => {
+  const check = (accum, curr) => {
     let intersected = true;
 
     for (let array of arrays) {
@@ -82,7 +82,7 @@ function intersection(arrays) {
     return intersected ? [...accum, curr] : accum;
   };
 
-  return reduce(arr, checker, []);
+  return reduce(arr, check, []);
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -93,14 +93,14 @@ function intersection(arrays) {
 function union(arrays) {
   let output = [];
 
-  const checker = (accum, curr) => {
+  const check = (accum, curr) => {
     const alreadyPresent = accum.includes(curr);
 
     return alreadyPresent ? accum : [...accum, curr];
   };
 
   for (let array of arrays) {
-    output = reduce(array, checker, output);
+    output = reduce(array, check, output);
   }
 
   return output;
@@ -112,14 +112,14 @@ function union(arrays) {
 
 // Challenge 9
 function objOfMatches(array1, array2, callback) {
-  const matcher = (accum, curr, index) => {
+  const match = (accum, curr, index) => {
     const expectedResult = array2[index];
     const matched = callback(curr) === expectedResult;
 
     return matched ? { ...accum, [curr]: expectedResult } : accum;
   };
 
-  return reduce(array1, matcher, {});
+  return reduce(array1, match, {});
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -128,7 +128,7 @@ function objOfMatches(array1, array2, callback) {
 
 // Challenge 10
 function multiMap(arrVals, arrCallbacks) {
-  const massInvoker = (accum, curr) => {
+  const massInvoke = (accum, curr) => {
     const result = [];
 
     for (let callback of arrCallbacks) {
@@ -138,7 +138,7 @@ function multiMap(arrVals, arrCallbacks) {
     return { ...accum, [curr]: result };
   };
 
-  return reduce(arrVals, massInvoker, {});
+  return reduce(arrVals, massInvoke, {});
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -221,50 +221,112 @@ function prioritize(array, callback) {
 // ); // should log: ["seinfeld", "sunny", "curb", "rickandmorty", "friends"];
 
 // Challenge 14
-function countBy(array, callback) {}
+function countBy(array, callback) {
+  const count = (accum, curr) => {
+    const result = callback(curr);
+
+    if (accum[result]) {
+      accum[result]++;
+    } else {
+      accum[result] = 1;
+    }
+
+    return accum;
+  };
+
+  return reduce(array, count, {});
+}
 
 // /*** Uncomment these to check your work! ***/
-// console.log(countBy([1, 2, 3, 4, 5], function(num) {
-// if (num % 2 === 0) return 'even';
-// else return 'odd';
-// })); // should log: { odd: 3, even: 2 }
+// console.log(
+//   countBy([1, 2, 3, 4, 5], function (num) {
+//     if (num % 2 === 0) return "even";
+//     else return "odd";
+//   })
+// ); // should log: { odd: 3, even: 2 }
 
 // Challenge 15
-function groupBy(array, callback) {}
+function groupBy(array, callback) {
+  const group = (accum, curr) => {
+    const result = callback(curr);
+
+    if (accum[result]) {
+      accum[result] = [...accum[result], curr];
+    } else {
+      accum[result] = [curr];
+    }
+
+    return accum;
+  };
+
+  return reduce(array, group, {});
+}
 
 // /*** Uncomment these to check your work! ***/
 // const decimals = [1.3, 2.1, 2.4];
-// const floored = function(num) { return Math.floor(num); };
+// const floored = function (num) {
+//   return Math.floor(num);
+// };
 // console.log(groupBy(decimals, floored)); // should log: { 1: [1.3], 2: [2.1, 2.4] }
 
 // Challenge 16
-function goodKeys(obj, callback) {}
+function goodKeys(obj, callback) {
+  const check = (accum, curr) => {
+    const isGood = callback(obj[curr]);
+
+    return isGood ? [...accum, curr] : accum;
+  };
+
+  return reduce(Object.keys(obj), check, []);
+}
 
 // /*** Uncomment these to check your work! ***/
-// const sunny = { mac: 'priest', dennis: 'calculating', charlie: 'birdlaw', dee: 'bird', frank: 'warthog' };
-// const startsWithBird = function(str) { return str.slice(0, 4).toLowerCase() === 'bird'; };
+// const sunny = {
+//   mac: "priest",
+//   dennis: "calculating",
+//   charlie: "birdlaw",
+//   dee: "bird",
+//   frank: "warthog",
+// };
+// const startsWithBird = function (str) {
+//   return str.slice(0, 4).toLowerCase() === "bird";
+// };
 // console.log(goodKeys(sunny, startsWithBird)); // should log: ['charlie', 'dee']
 
 // Challenge 17
-function commutative(func1, func2, value) {}
+function commutative(func1, func2, value) {
+  const resultInOrder = func2(func1(value));
+  const resultInReverseOrder = func1(func2(value));
+
+  return resultInOrder === resultInReverseOrder;
+}
 
 // /*** Uncomment these to check your work! ***/
-// const multBy3 = n => n * 3;
-// const divBy4 = n => n / 4;
-// const subtract5 = n => n - 5;
+// const multBy3 = (n) => n * 3;
+// const divBy4 = (n) => n / 4;
+// const subtract5 = (n) => n - 5;
 // console.log(commutative(multBy3, divBy4, 11)); // should log: true
 // console.log(commutative(multBy3, subtract5, 10)); // should log: false
 // console.log(commutative(divBy4, subtract5, 48)); // should log: false
 
 // Challenge 18
-function objFilter(obj, callback) {}
+function objFilter(obj, callback) {
+  let output = {};
+
+  for (let key in obj) {
+    if (obj[key] === callback(key)) {
+      output[key] = obj[key];
+    }
+  }
+  return output;
+}
 
 // /*** Uncomment these to check your work! ***/
 // const startingObj = {};
 // startingObj[6] = 3;
 // startingObj[2] = 1;
 // startingObj[12] = 4;
-// const half = n => n / 2;
+// const half = (n) => n / 2;
 // console.log(objFilter(startingObj, half)); // should log: { 2: 1, 6: 3 }
 
 // Challenge 19
