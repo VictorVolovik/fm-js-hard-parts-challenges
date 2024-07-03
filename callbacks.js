@@ -19,25 +19,26 @@ function addS(word) {
 // Challenge 3
 function map(array, callback) {
   let output = [];
-  for (let num of array) {
-    output.push(callback(num));
+
+  for (let i = 0; i < array.length; i++) {
+    output.push(callback(array[i]));
   }
 
   return output;
 }
 
 // /*** Uncomment these to check your work! ***/
-// console.log(map([1, 2, 3], addTwo));
+// console.log(map([1, 2, 3], addTwo)); // [3, 4, 5]
 
 // Challenge 4
 function forEach(array, callback) {
-  for (let num of array) {
-    callback(num);
+  for (let i = 0; i < array.length; i++) {
+    callback(array[i]);
   }
 }
 
 // /*** Uncomment these to check your work! ***/
-// forEach([1, 2, 3], (num) => console.log(num))
+// forEach([1, 2, 3], (num) => console.log(num));
 
 // Challenge 5
 function mapWith(array, callback) {
@@ -64,7 +65,9 @@ function reduce(array, callback, initialValue) {
 
 // /*** Uncomment these to check your work! ***/
 // const nums = [4, 1, 3];
-// const add = function(a, b) { return a + b; }
+// const add = function (a, b) {
+//   return a + b;
+// };
 // console.log(reduce(nums, add, 0));
 
 // Challenge 7
@@ -86,8 +89,13 @@ function intersection(arrays) {
 }
 
 // /*** Uncomment these to check your work! ***/
-// console.log(intersection([[5, 10, 15, 20, 55], [15, 88, 1, 5, 7, 55], [1, 10, 15, 5, 20, 55]]));
-// should log: [5, 15, 55]
+// console.log(
+//   intersection([
+//     [5, 10, 15, 20, 55],
+//     [15, 88, 1, 5, 7, 55],
+//     [1, 10, 15, 5, 20, 55],
+//   ])
+// ); // should log: [5, 15, 55]
 
 // Challenge 8
 function union(arrays) {
@@ -107,8 +115,13 @@ function union(arrays) {
 }
 
 // /*** Uncomment these to check your work! ***/
-// console.log(union([[5, 10, 15], [15, 88, 1, 5, 7], [100, 15, 10, 1, 5]]));
-// should log: [5, 10, 15, 88, 1, 7, 100]
+// console.log(
+//   union([
+//     [5, 10, 15],
+//     [15, 88, 1, 5, 7],
+//     [100, 15, 10, 1, 5],
+//   ])
+// ); // should log: [5, 10, 15, 88, 1, 7, 100]
 
 // Challenge 9
 function objOfMatches(array1, array2, callback) {
@@ -123,8 +136,15 @@ function objOfMatches(array1, array2, callback) {
 }
 
 // /*** Uncomment these to check your work! ***/
-// console.log(objOfMatches(['hi', 'howdy', 'bye', 'later', 'hello'], ['HI', 'Howdy', 'BYE', 'LATER', 'hello'], function(str) { return str.toUpperCase(); }));
-// should log: { hi: 'HI', bye: 'BYE', later: 'LATER' }
+// console.log(
+//   objOfMatches(
+//     ["hi", "howdy", "bye", "later", "hello"],
+//     ["HI", "Howdy", "BYE", "LATER", "hello"],
+//     function (str) {
+//       return str.toUpperCase();
+//     }
+//   )
+// ); // should log: { hi: 'HI', bye: 'BYE', later: 'LATER' }
 
 // Challenge 10
 function multiMap(arrVals, arrCallbacks) {
@@ -142,8 +162,22 @@ function multiMap(arrVals, arrCallbacks) {
 }
 
 // /*** Uncomment these to check your work! ***/
-// console.log(multiMap(['catfood', 'glue', 'beer'], [function(str) { return str.toUpperCase(); }, function(str) { return str[0].toUpperCase() + str.slice(1).toLowerCase(); }, function(str) { return str + str; }]));
-// should log: { catfood: ['CATFOOD', 'Catfood', 'catfoodcatfood'], glue: ['GLUE', 'Glue', 'glueglue'], beer: ['BEER', 'Beer', 'beerbeer'] }
+// console.log(
+//   multiMap(
+//     ["catfood", "glue", "beer"],
+//     [
+//       function (str) {
+//         return str.toUpperCase();
+//       },
+//       function (str) {
+//         return str[0].toUpperCase() + str.slice(1).toLowerCase();
+//       },
+//       function (str) {
+//         return str + str;
+//       },
+//     ]
+//   )
+// ); // should log: { catfood: ['CATFOOD', 'Catfood', 'catfoodcatfood'], glue: ['GLUE', 'Glue', 'glueglue'], beer: ['BEER', 'Beer', 'beerbeer'] }
 
 // Challenge 11
 function objectFilter(obj, callback) {
