@@ -201,16 +201,14 @@ function objectFilter(obj, callback) {
 
 // Challenge 12
 function majority(array, callback) {
-  const shouldPass = array.length / 2;
-  let passed = 0;
+  let countTrue = 0;
+  let countFalse = 0;
 
   for (let item of array) {
-    if (callback(item)) {
-      passed++;
-    }
+    callback(item) ? countTrue++ : countFalse++;
   }
 
-  return passed > shouldPass;
+  return countTrue > countFalse;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -285,7 +283,7 @@ function groupBy(array, callback) {
     const result = callback(curr);
 
     if (accum[result]) {
-      accum[result] = [...accum[result], curr];
+      accum[result].push(curr);
     } else {
       accum[result] = [curr];
     }
@@ -405,20 +403,20 @@ function pipe(arrOfFuncs, value) {
 
 // Challenge 21
 function highestFunc(objOfFuncs, subject) {
+  let highestKey = null;
   let highestResult;
-  let highestFunc;
 
   for (let funcKey of Object.keys(objOfFuncs)) {
     const func = objOfFuncs[funcKey];
     const result = func(subject);
 
     if (!highestResult || highestResult < result) {
+      highestKey = funcKey;
       highestResult = result;
-      highestFunc = funcKey;
     }
   }
 
-  return highestFunc;
+  return highestKey;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -432,13 +430,7 @@ function highestFunc(objOfFuncs, subject) {
 
 // Challenge 22
 function combineOperations(startVal, arrOfFuncs) {
-  let result = startVal;
-
-  for (let func of arrOfFuncs) {
-    result = func(result);
-  }
-
-  return result;
+  return pipe(arrOfFuncs, startVal);
 }
 
 // /*** Uncomment these to check your work! ***/
