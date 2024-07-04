@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npx nodemon index.js",
-    "start:callbacks": "npx nodemon callbacks.js"
+    "start:callbacks": "npx nodemon callbacks.js",
+    "start:closure": "npx nodemon closure.js"
   },
   "keywords": [],
   "author": "",

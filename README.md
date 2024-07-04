@@ -2,4 +2,6 @@ Solutions to the challenges in [JavaScript: The Hard Parts, v2](https://frontend
 
 [Callbacks and Higher-Order Functions](./callbacks.md) - `npm run start:callbacks`
 
+[Closures, Scope, and Execution Context](./closure.md) - `npm run start:closure`
+
 
