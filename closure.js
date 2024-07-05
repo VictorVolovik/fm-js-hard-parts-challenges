@@ -1,17 +1,25 @@
 // Challenge 1
-function createFunction() {}
+function createFunction() {
+  return function () {
+    console.log("hello");
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
 // const function1 = createFunction();
 // function1(); // => should console.log('hello');
 
 // Challenge 2
-function createFunctionPrinter(input) {}
+function createFunctionPrinter(input) {
+  return function () {
+    console.log(input);
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
-// const printSample = createFunctionPrinter('sample');
+// const printSample = createFunctionPrinter("sample");
 // printSample(); // => should console.log('sample');
-// const printHello = createFunctionPrinter('hello');
+// const printHello = createFunctionPrinter("hello");
 // printHello(); // => should console.log('hello');
 
 // Challenge 3
@@ -34,73 +42,140 @@ const jasCounter = outer();
 // willCounter();
 // willCounter();
 // willCounter();
-
 // jasCounter();
 // willCounter();
 
-function addByX(x) {}
+function addByX(x) {
+  return function (input) {
+    // console.log(input + x);
+    return input + x;
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
 // const addByTwo = addByX(2);
 // addByTwo(1); // => should return 3
 // addByTwo(2); // => should return 4
 // addByTwo(3); // => should return 5
-
 // const addByThree = addByX(3);
 // addByThree(1); // => should return 4
 // addByThree(2); // => should return 5
-
 // const addByFour = addByX(4);
 // addByFour(4); // => should return 8
 // addByFour(5); // => should return 9
 
 // Challenge 4
-function once(func) {}
+function once(func) {
+  let result;
+
+  return function (input) {
+    if (!result) {
+      result = func(input);
+    }
+
+    return result;
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
+// const addByTwo = addByX(2);
 // const onceFunc = once(addByTwo);
-// console.log(onceFunc(4));  // => should log 6
-// console.log(onceFunc(10));  // => should log 6
-// console.log(onceFunc(9001));  // => should log 6
+// console.log(onceFunc(4)); // => should log 6
+// console.log(onceFunc(10)); // => should log 6
+// console.log(onceFunc(9001)); // => should log 6
 
 // Challenge 5
-function after(count, func) {}
+function after(count, func) {
+  let runCount = 0;
+
+  return function () {
+    runCount++;
+    if (runCount >= count) {
+      func();
+    }
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
-// const called = function() { console.log('hello') };
+// const called = function () {
+//   console.log("hello");
+// };
 // const afterCalled = after(3, called);
 // afterCalled(); // => nothing is printed
 // afterCalled(); // => nothing is printed
 // afterCalled(); // => 'hello' is printed
 
 // Challenge 6
-function delay(func, wait) {}
+function delay(func, wait, ...params) {
+  setTimeout(func, wait, ...params);
+}
+
+// /*** Uncomment these to check your work! ***/
+// const shouldDelay = (...messages) => console.log("delayed", ...messages);
+// delay(shouldDelay, 3000, "some more information", "and text");
 
 // Challenge 7
-function rollCall(names) {}
+function rollCall(names) {
+  let index = 0;
+  return function () {
+    if (index < names.length) {
+      const nameAtCurrIndex = names[index];
+      index++;
+      console.log(nameAtCurrIndex);
+    } else {
+      console.log("Everyone accounted for");
+    }
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
-// const rollCaller = rollCall(['Victoria', 'Juan', 'Ruth'])
-// rollCaller() // => should log 'Victoria'
-// rollCaller() // => should log 'Juan'
-// rollCaller() // => should log 'Ruth'
-// rollCaller() // => should log 'Everyone accounted for'
+// const rollCaller = rollCall(["Victoria", "Juan", "Ruth"]);
+// rollCaller(); // => should log 'Victoria'
+// rollCaller(); // => should log 'Juan'
+// rollCaller(); // => should log 'Ruth'
+// rollCaller(); // => should log 'Everyone accounted for'
 
 // Challenge 8
-function saveOutput(func, magicWord) {}
+function saveOutput(func, magicWord) {
+  const history = {};
+
+  return function (input) {
+    if (input === magicWord) {
+      return history;
+    } else {
+      const result = func(input);
+      history[input] = result;
+      return result;
+    }
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
-// const multiplyBy2 = function(num) { return num * 2; };
-// const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
+// const multiplyBy2 = function (num) {
+//   return num * 2;
+// };
+// const multBy2AndLog = saveOutput(multiplyBy2, "boo");
 // console.log(multBy2AndLog(2)); // => should log 4
 // console.log(multBy2AndLog(9)); // => should log 18
-// console.log(multBy2AndLog('boo')); // => should log { 2: 4, 9: 18 }
+// console.log(multBy2AndLog("boo")); // => should log { 2: 4, 9: 18 }
 
 // Challenge 9
-function cycleIterator(array) {}
+function cycleIterator(array) {
+  let index = 0;
+
+  return function () {
+    if (index === array.length) {
+      index = 0;
+    }
+
+    const item = array[index];
+    index++;
+    return item;
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
-// const threeDayWeekend = ['Fri', 'Sat', 'Sun'];
+// const threeDayWeekend = ["Fri", "Sat", "Sun"];
 // const getDay = cycleIterator(threeDayWeekend);
 // console.log(getDay()); // => should log 'Fri'
 // console.log(getDay()); // => should log 'Sat'
