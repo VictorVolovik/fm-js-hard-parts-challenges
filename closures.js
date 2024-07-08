@@ -11,9 +11,10 @@ function createFunction() {
 
 // Challenge 2
 function createFunctionPrinter(input) {
-  return function () {
+  function printer() {
     console.log(input);
-  };
+  }
+  return printer;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -46,10 +47,11 @@ const jasCounter = outer();
 // willCounter();
 
 function addByX(x) {
-  return function (input) {
+  function add(input) {
     // console.log(input + x);
     return input + x;
-  };
+  }
+  return add;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -67,14 +69,13 @@ function addByX(x) {
 // Challenge 4
 function once(func) {
   let result;
-
-  return function (input) {
+  function callOnce(input) {
     if (!result) {
       result = func(input);
     }
-
     return result;
-  };
+  }
+  return callOnce;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -87,13 +88,13 @@ function once(func) {
 // Challenge 5
 function after(count, func) {
   let runCount = 0;
-
-  return function () {
+  function callAfter() {
     runCount++;
     if (runCount >= count) {
       func();
     }
-  };
+  }
+  return callAfter;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -117,7 +118,7 @@ function delay(func, wait, ...params) {
 // Challenge 7
 function rollCall(names) {
   let index = 0;
-  return function () {
+  function caller() {
     if (index < names.length) {
       const nameAtCurrIndex = names[index];
       index++;
@@ -125,7 +126,8 @@ function rollCall(names) {
     } else {
       console.log("Everyone accounted for");
     }
-  };
+  }
+  return caller;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -138,8 +140,7 @@ function rollCall(names) {
 // Challenge 8
 function saveOutput(func, magicWord) {
   const history = {};
-
-  return function (input) {
+  function save(input) {
     if (input === magicWord) {
       return history;
     } else {
@@ -147,7 +148,8 @@ function saveOutput(func, magicWord) {
       history[input] = result;
       return result;
     }
-  };
+  }
+  return save;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -162,16 +164,15 @@ function saveOutput(func, magicWord) {
 // Challenge 9
 function cycleIterator(array) {
   let index = 0;
-
-  return function () {
+  function iterate() {
     if (index === array.length) {
       index = 0;
     }
-
     const item = array[index];
     index++;
     return item;
-  };
+  }
+  return iterate;
 }
 
 // /*** Uncomment these to check your work! ***/
@@ -183,52 +184,124 @@ function cycleIterator(array) {
 // console.log(getDay()); // => should log 'Fri'
 
 // Challenge 10
-function defineFirstArg(func, arg) {}
+function defineFirstArg(func, arg) {
+  function withFirstArg(...args) {
+    return func(arg, ...args);
+  }
+  return withFirstArg;
+}
 
 // /*** Uncomment these to check your work! ***/
-// const subtract = function(big, small) { return big - small; };
+// const subtract = function (big, small) {
+//   return big - small;
+// };
+// const sumAll = function (...nums) {
+//   return nums.reduce((accum, curr) => {
+//     return (accum += curr);
+//   }, 0);
+// };
 // const subFrom20 = defineFirstArg(subtract, 20);
+// const sumAllStartingFrom10 = defineFirstArg(sumAll, 10);
 // console.log(subFrom20(5)); // => should log 15
+// console.log(sumAllStartingFrom10(10, 15, 20)); // => should log 55
 
 // Challenge 11
-function dateStamp(func) {}
+function dateStamp(func) {
+  function withTimestamp(...params) {
+    return {
+      date: new Date().toDateString(),
+      output: func(...params),
+    };
+  }
+  return withTimestamp;
+}
 
 // /*** Uncomment these to check your work! ***/
-// const stampedMultBy2 = dateStamp(n => n * 2);
+// const stampedMultBy2 = dateStamp((n) => n * 2);
 // console.log(stampedMultBy2(4)); // => should log { date: (today's date), output: 8 }
 // console.log(stampedMultBy2(6)); // => should log { date: (today's date), output: 12 }
 
 // Challenge 12
-function censor() {}
+function censor() {
+  let censoredList = [];
+
+  function updateCensoredList(str1, str2) {
+    censoredList.push({ search: str1, replace: str2 });
+  }
+
+  function applyCensorship(str) {
+    let result = str;
+    for (let censored of censoredList) {
+      result = result.replace(censored.search, censored.replace);
+    }
+    return result;
+  }
+
+  function censurer(str1, str2) {
+    if (str2) {
+      updateCensoredList(str1, str2);
+    }
+    return applyCensorship(str1);
+  }
+
+  return censurer;
+}
 
 // /*** Uncomment these to check your work! ***/
 // const changeScene = censor();
-// changeScene('dogs', 'cats');
-// changeScene('quick', 'slow');
-// console.log(changeScene('The quick, brown fox jumps over the lazy dogs.')); // => should log 'The slow, brown fox jumps over the lazy cats.'
+// changeScene("dogs", "cats");
+// changeScene("quick", "slow");
+// console.log(changeScene("The quick, brown fox jumps over the lazy dogs.")); // => should log 'The slow, brown fox jumps over the lazy cats.'
 
 // Challenge 13
-function createSecretHolder(secret) {}
+function createSecretHolder(secret) {
+  let vault = secret;
+
+  return {
+    getSecret: () => vault,
+    setSecret: (value) => (vault = value),
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
-// obj = createSecretHolder(5)
-// obj.getSecret() // => returns 5
-// obj.setSecret(2)
-// obj.getSecret() // => returns 2
+// obj = createSecretHolder(5);
+// console.log(obj.getSecret()); // => returns 5
+// obj.setSecret(2);
+// console.log(obj.getSecret()); // => returns 2
 
 // Challenge 14
-function callTimes() {}
+function callTimes() {
+  let count = 0;
+
+  return function () {
+    count++;
+    return count;
+  };
+}
 
 // /*** Uncomment these to check your work! ***/
 // let myNewFunc1 = callTimes();
 // let myNewFunc2 = callTimes();
-// myNewFunc1(); // => 1
-// myNewFunc1(); // => 2
-// myNewFunc2(); // => 1
-// myNewFunc2(); // => 2
+// console.log(myNewFunc1()); // => 1
+// console.log(myNewFunc1()); // => 2
+// console.log(myNewFunc2()); // => 1
+// console.log(myNewFunc2()); // => 2
 
 // Challenge 15
-function roulette(num) {}
+function roulette(num) {
+  let limit = num;
+  function spin() {
+    limit--;
+    if (limit === 0) {
+      return "win";
+    } else if (limit < 0) {
+      return "pick a number to play again";
+    } else {
+      return "spin";
+    }
+  }
+  return spin;
+}
 
 // /*** Uncomment these to check your work! ***/
 // const play = roulette(3);
