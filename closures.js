@@ -312,7 +312,21 @@ function roulette(num) {
 // console.log(play()); // => should log 'pick a number to play again'
 
 // Challenge 16
-function average() {}
+function average() {
+  let numbers = [];
+  let averageNum = 0;
+
+  function calculate(num) {
+    if (num) {
+      numbers.push(num);
+      const sum = numbers.reduce((accum, curr) => accum + curr, 0);
+      averageNum = sum / numbers.length;
+    }
+
+    return averageNum;
+  }
+  return calculate;
+}
 
 // /*** Uncomment these to check your work! ***/
 // const avgSoFar = average();
@@ -324,40 +338,98 @@ function average() {}
 // console.log(avgSoFar()); // => should log 8
 
 // Challenge 17
-function makeFuncTester(arrOfTests) {}
+function makeFuncTester(arrOfTests) {
+  function test(func) {
+    return arrOfTests.every((pair) => func(pair[0]) === pair[1]);
+  }
+  return test;
+}
 
 // /*** Uncomment these to check your work! ***/
 // const capLastTestCases = [];
-// capLastTestCases.push(['hello', 'hellO']);
-// capLastTestCases.push(['goodbye', 'goodbyE']);
-// capLastTestCases.push(['howdy', 'howdY']);
+// capLastTestCases.push(["hello", "hellO"]);
+// capLastTestCases.push(["goodbye", "goodbyE"]);
+// capLastTestCases.push(["howdy", "howdY"]);
 // const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
-// const capLastAttempt1 = str => str.toUpperCase();
-// const capLastAttempt2 = str => str.slice(0, -1) + str.slice(-1).toUpperCase();
+// const capLastAttempt1 = (str) => str.toUpperCase();
+// const capLastAttempt2 = (str) => str.slice(0, -1) + str.slice(-1).toUpperCase();
 // console.log(shouldCapitalizeLast(capLastAttempt1)); // => should log false
 // console.log(shouldCapitalizeLast(capLastAttempt2)); // => should log true
 
 // Challenge 18
-function makeHistory(limit) {}
+function makeHistory(limit) {
+  let history = [];
+
+  function manageHistory(command) {
+    if (command === "undo") {
+      const undone = history.pop();
+
+      if (undone) {
+        return `${undone} undone`;
+      } else {
+        return "nothing to undo";
+      }
+    }
+    history.push(command);
+    if (history.length > limit) {
+      history.shift();
+    }
+    return `${command} done`;
+  }
+
+  return manageHistory;
+}
 
 // /*** Uncomment these to check your work! ***/
 // const myActions = makeHistory(2);
-// console.log(myActions('jump')); // => should log 'jump done'
-// console.log(myActions('undo')); // => should log 'jump undone'
-// console.log(myActions('walk')); // => should log 'walk done'
-// console.log(myActions('code')); // => should log 'code done'
-// console.log(myActions('pose')); // => should log 'pose done'
-// console.log(myActions('undo')); // => should log 'pose undone'
-// console.log(myActions('undo')); // => should log 'code undone'
-// console.log(myActions('undo')); // => should log 'nothing to undo'
+// console.log(myActions("jump")); // => should log 'jump done'
+// console.log(myActions("undo")); // => should log 'jump undone'
+// console.log(myActions("walk")); // => should log 'walk done'
+// console.log(myActions("code")); // => should log 'code done'
+// console.log(myActions("pose")); // => should log 'pose done'
+// console.log(myActions("undo")); // => should log 'pose undone'
+// console.log(myActions("undo")); // => should log 'code undone'
+// console.log(myActions("undo")); // => should log 'nothing to undo'
 
 // Challenge 19
-function blackjack(array) {}
+function blackjack(array) {
+  function dealer(num1, num2) {
+    let round = 0;
+    let score = 0;
+
+    function player() {
+      if (score === null) {
+        return "you are done!";
+      }
+
+      round++;
+
+      if (round === 1) {
+        score = num1 + num2;
+      } else {
+        score += array.shift();
+      }
+
+      if (score > 21) {
+        score = null;
+        return "bust";
+      }
+
+      return score;
+    }
+
+    return player;
+  }
+
+  return dealer;
+}
 
 // /*** Uncomment these to check your work! ***/
 
 // /*** DEALER ***/
-// const deal = blackjack([2, 6, 1, 7, 11, 4, 6, 3, 9, 8, 9, 3, 10, 4, 5, 3, 7, 4, 9, 6, 10, 11]);
+const deal = blackjack([
+  2, 6, 1, 7, 11, 4, 6, 3, 9, 8, 9, 3, 10, 4, 5, 3, 7, 4, 9, 6, 10, 11,
+]);
 
 // /*** PLAYER 1 ***/
 // const i_like_to_live_dangerously = deal(4, 5);
@@ -380,7 +452,7 @@ function blackjack(array) {}
 // console.log(i_TOO_like_to_live_dangerously()); // => should log 'you are done!
 // console.log(i_TOO_like_to_live_dangerously()); // => should log 'you are done!
 
-// /*** PLAYER 3 ***/
+/*** PLAYER 3 ***/
 // const i_ALSO_like_to_live_dangerously = deal(3, 7);
 // console.log(i_ALSO_like_to_live_dangerously()); // => should log 10
 // console.log(i_ALSO_like_to_live_dangerously()); // => should log 13
