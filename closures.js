@@ -164,13 +164,11 @@ function saveOutput(func, magicWord) {
 // Challenge 9
 function cycleIterator(array) {
   let index = 0;
+
   function iterate() {
-    if (index === array.length) {
-      index = 0;
-    }
-    const item = array[index];
+    let output = array[index % array.length];
     index++;
-    return item;
+    return output;
   }
   return iterate;
 }
