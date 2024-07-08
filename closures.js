@@ -289,13 +289,14 @@ function callTimes() {
 function roulette(num) {
   let limit = num;
   function spin() {
-    limit--;
-    if (limit === 0) {
-      return "win";
-    } else if (limit < 0) {
-      return "pick a number to play again";
-    } else {
+    if (limit > 1) {
+      limit--;
       return "spin";
+    } else if (limit === 1) {
+      limit--;
+      return "win";
+    } else {
+      return "pick a number to play again";
     }
   }
   return spin;
