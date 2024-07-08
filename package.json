@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npx nodemon index.js",
     "start:callbacks": "npx nodemon callbacks.js",
-    "start:closure": "npx nodemon closures.js"
+    "start:closure": "npx nodemon closures.js",
+    "start:async": "npx nodemon async.js "
   },
   "keywords": [],
   "author": "",
