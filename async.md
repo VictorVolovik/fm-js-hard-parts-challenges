@@ -28,9 +28,6 @@ Write a function called `everyXsecsForYsecs` that will accept three arguments: a
 
 `everyXsecsForYsecs` will execute the given function every `interval` number of milliseconds, but then automatically stop after `duration` milliseconds.
 
-Then pass the below `sayHi` function into an invocation of `everyXsecsForYsecs` with 1000 interval time an 5000 duration time.
-What do you expect to happen?
-
 ## Challenge 7
 
 Write a function `delayCounter` that accepts a number (called 'target') as the first argument and a number of milliseconds (called 'wait') as the second argument, and returns a function.
