@@ -4,4 +4,4 @@ Solutions to the challenges in [JavaScript: The Hard Parts, v2](https://frontend
 
 [Closures, Scope, and Execution Context](./closures.md) - `npm run start:closures`
 
-[Asynchronicity](./async.js) - `npm run start:async`
+[Asynchronicity](./async.md) - `npm run start:async`
